@@ -1,12 +1,18 @@
 'use strict'
-
-const { request, response } = require('express');
 const express = require('express');
-
+require('dotenv').config();
+const cors = require('cors');
 const server =express();
-const wetherData = require('./data/weather.json');
-const PORT = 3001;
+const weatherData = require('./data/weather.json');
+const PORT = process.env.PORT;
+server.use(cors());
 
+class Forecast {
+    constructor(data, description){
+        this.data = data;
+        this.description = description;
+    }
+}
 
 // locaolhost:3001/
 server.get('/',(request, response) => {
@@ -18,21 +24,32 @@ server.get('/test',(request, response) => {
     response.send('api working all good');
 })
 
-// locaolhost:3001/getWeather
-server.get('/getWeather',(request, response) => {
-    response.send(wetherData);
 
-    let cityName = req.query.cityNameSelect;
-    console.log(request.query);
-    console.log(request.query.city_name);
-    let weatherInfo = wetherData.results.find((item) => {
+
+// http://localhost:3001/getWeather?cityNameSelect=Amman
+server.get('/getWeather',(request, response) => {
+    // response.send(weatherData);
+
+    let cityName = request.query.cityNameSelect;
+
+    // console.log(request.query);
+    // console.log(request.query.city_name);
+
+    let weatherInfo = weatherData.find((item) => {
         if(item.city_name === cityName){
             return item;
         }
-    })
-    console.log('weatherInfo',weatherInfo);
-    request.send(weatherInfo);
-})
+    });
+
+    let newArr = weatherInfo.data.map(element => {
+        return new Forecast(element.datetime, element.weather.description);
+    });
+
+    // console.log('weatherInfo',weatherInfo);
+    response.send(newArr);
+    console.log(newArr);
+});
+
 
 // locaolhost:3001/anything
 server.get('*',(request, response) => {
