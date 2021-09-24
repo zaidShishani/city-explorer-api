@@ -4,7 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const server =express();
 const axios = require('axios')
-
+//modules
 const weatherData = require('./modules/weather.js');
 const moviesRoute = require('./modules/movies.js');
 
