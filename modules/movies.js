@@ -3,12 +3,12 @@ const axios = require('axios');
 class movie {
     constructor(item) {
         this.title = item.title;
-        this.overveiw = item.overveiw;
-        this.avgVotes = item.avg_votes;
-        this.totalVotes = item.total_votes;
-        this.imgURL = 'https://image.tmdb.org/t/p/w500'+ item.img_URL;
+        this.overveiw = item.overview;
+        this.avgVotes = item.vote_average;
+        this.totalVotes = item.vote_count;
+        this.imgURL = 'https://image.tmdb.org/t/p/w500' + item.poster_path;
         this.popularity = item.popularity ;
-        this.released  = item.released;
+        this.released  = item.release_date;
     }
 }
 
