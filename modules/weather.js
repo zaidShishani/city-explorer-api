@@ -1,9 +1,9 @@
 const axios = require('axios');
 
 class Forecast {
-    constructor(data, description){
-        this.data = data;
-        this.description = description;
+    constructor(element){
+        this.date = element.date;
+        this.description = element.weather.description;
     }
 }
 
