@@ -14,13 +14,20 @@ class movie {
 
 function moviesRoute(req, res) {
 
-    let searchQuerey = req.querey.querey;
+    let searchQuerey = req.query.query;
     let movieObj = [];
 
     let movieURL = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&query=${searchQuerey}`
 
     axios.get(movieURL).then(dataResult => {
 
-        let newArrMovie = result.data.result
-    })
+        let newArrMovie = dataResult.data.results.map(item => {
+            return new movie(item);
+        })
+        res.send(newArrMovie);
+    }).catch(error => {
+        res.send(error);
+    });
 }
+
+module.exports = moviesRoute;
