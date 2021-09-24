@@ -6,12 +6,14 @@ const server =express();
 const axios = require('axios')
 
 const weatherData = require('./modules/weather.js');
+const moviesRoute = require('./modules/movies.js');
 
 const PORT = process.env.PORT;
 server.use(cors());
 
 server.get('/',homeRoute);
 server.get('/weather',weatherData);
+server.get('/movie',moviesRoute);
 server.get('/test',testRoute);
 server.get('/*',anythingRoute);
 
